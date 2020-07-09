@@ -152,6 +152,77 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Spring5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/09/Spring5/">Spring5</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/09/Spring5/" class="archive-article-date">
+  	<time datetime="2020-07-09T10:22:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>title: Spring<br>date: 2020-07-09 17:23:47<br>tags:</p>
+<hr>
+<p>###Spring框架概述<br>1、Spring市轻量级的开源JavaEE框架<br>2、Spring开源解决企业应用开发的复杂性<br>3、Spring有两个核心部分：IOC和Aop<br>（1）IOC：控制反转，把创建对象过程交给Spring进行管理<br>（2）Aop：面向切面，不修改源代码进行功能增强<br>4、Spring特点<br>（1）方便解耦、简化开发<br>（2）Aop编程支持<br>（3）方便程序的测试<br>（4）方便和其他框架进行整合<br>（5）方便进行事务操作<br>（6）降低API开发难度</p>
+<p>###Spring入门案例<br>1、创建spring项目<br>2、导入spring的jar包<br><img src="jar.JPG" alt=""><br>3、创建普通的类创建普通的方法<br>public class User {<br>    public void add(){<br>        System.out.println(“add…..”);<br>    }<br>}</p>
+<p>5、创建Spring配置文件、在配置文件配置创建的对象<br>（1）Spring配置文件使用xml格式<br><img src="bean.JPG" alt=""></p>
+<p><img src="bean2.JPG" alt=""></p>
+<p>6、测试<br>    @Test<br>    void addTest(){<br>        //1.加载spring配置文件<br>        ApplicationContext context =<br>                new ClassPathXmlApplicationContext(“bean1.xml”);<br>        //得到创建的配置对象 user是配置中id的值<br>        User user = context.getBean(“user”, User.class);<br>        System.out.println(user);<br>        user.add();<br>    }</p>
+<p>（1）报错class path resource [bean1.xml] cannot be opened because it does not exist。无法找到XXX.xml文件放入resources文件下的类路径<br><img src="bean4.JPG" alt=""><br>（2）成功结果<br><img src="bean3.JPG" alt=""></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/09/Spring5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-谷粒商城" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
