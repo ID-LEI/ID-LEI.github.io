@@ -236,6 +236,42 @@ this.address = address;</code></pre><p>  }<br>}<br>（2）在spring配置文件�
 </ul>
 <p>#第五种p名称空间注入（了解）<br>（1）使用p名称空间注入，简化基于xml配置方式<br>第一步添加p名称空间在配置文件中<br><img src="IOCB5.JPG" alt=""></p>
 <p>第二步进行属性注入，在bean标签里面进行操作<br><img src="IOCB6.JPG" alt=""></p>
+<hr>
+<p>IOC操作Bean管理（xml注入其他类型属性）<br>1、字面量（固定值）<br>（1）null值<br>        <property name="adderess"><br>        <!--null值--><br>            <null></null><br>        </property><br>（2）属性值包含特殊符号<br>        <!--属性值中含有特殊符号比如 <>
+         1.把<>进行转义&lt,&gt
+         2.把特殊符号的内容写到CDATA
+         --><br>        <property name="adderess"><br>            <value><![CDATA[<<武当山>>]]></value><br>        </property><br>    </bean></p>
+<p>2、注入属性-外部bean<br>（1）创建两个类service类和dao类<br>（2）在service调用dao里面的方法<br>（3）在spring配置文件中进行配置</p>
+<pre><code>&lt;!--创建service和dao对象--&gt;
+&lt;bean id=&quot;userService&quot; class=&quot;spring_demo.spring5.service.UserService&quot;&gt;
+&lt;!--注入UserDao对象
+    name属性：类里面的属性名称
+    ref属性：创建UserDao对象bean标签中的id值--&gt;
+    &lt;property name=&quot;userDao&quot; ref=&quot;userDaoImpl&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+&lt;bean id=&quot;userDaoImpl&quot; class=&quot;spring_demo.spring5.dao.UserDaoImp&quot;&gt;&lt;/bean&gt;</code></pre><p>3、注入属性-内部bean和级联赋值<br>（1）一对多关系：部门和员工<br>一个部门有多个员工，一个员工属于一个部门<br>部门是一，员工是多<br>（2）在实体类之间表示一对多关系<br>//部门类<br>public class Dept {<br>    private String dname;<br>    public void setDname(String dname) {<br>        this.dname = dname;<br>    }<br>}</p>
+<p>//员工类<br>public class Emp {<br>    private String ename;<br>    private String gender;</p>
+<pre><code>//员工所属的某一个部门，使用对象形式表示
+private Dept dept;
+public void setDept(Dept dept) {
+    this.dept = dept;
+}
+
+public void setEname(String ename) {
+    this.ename = ename;
+}
+public void setGender(String gender) {
+    this.gender = gender;
+}</code></pre><p>}</p>
+<p>（3）在spring配置文件中配置<br>    <!--内部bean--><br>    <bean id="emp" class="spring_demo.spring5.bean.Emp"><br>        <!--设置两个普通属性--><br>        <property name="ename" value="张楚岚"></property><br>        <property name="gender" value="男"></property></p>
+<pre><code>    &lt;!--设置对象类型属性--&gt;
+    &lt;property name=&quot;dept&quot;&gt;
+        &lt;bean id=&quot;dept&quot; class=&quot;spring_demo.spring5.bean.Dept&quot;&gt;
+            &lt;property name=&quot;dname&quot; value=&quot;java开发&quot;&gt;&lt;/property&gt;
+        &lt;/bean&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;</code></pre><p>4、注入属性-级联赋值<br>（1）第一种写法<br>    <!--级联赋值--><br>    <bean id="emp" class="spring_demo.spring5.bean.Emp"><br>        <!--设置两个普通属性--><br>        <property name="ename" value="张楚岚"></property><br>        <property name="gender" value="男"></property><br>        <!--级联赋值--><br>        <property name="dept" ref="dept"></property><br>    </bean><br>    <bean id="dept" class="spring_demo.spring5.bean.Dept"><br>        <property name="dname" value="Java开发部门"></property><br>    </bean></p>
+<p>（2）第二种写法<br>   前提是生产dept对象属性的get方法<br><img src="IOCB7.JPG" alt=""><br>    <!--级联赋值--><br>    <bean id="emp" class="spring_demo.spring5.bean.Emp"><br>        <!--设置两个普通属性--><br>        <property name="ename" value="张楚岚"></property><br>        <property name="gender" value="男"></property><br>        <!--级联赋值--><br>        <property name="dept" ref="dept"></property><br>        <property name="dept.dname" value="人事部门"></property><br>    </bean><br>    <bean id="dept" class="spring_demo.spring5.bean.Dept"><br>        <property name="dname" value="Java开发部门"></property><br>    </bean></p>
 
       
 
