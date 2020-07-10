@@ -30,8 +30,14 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB5.JPG">
 <meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB6.JPG">
 <meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB7.JPG">
+<meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB8.JPG">
+<meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB9.JPG">
+<meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB10.JPG">
+<meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB11.JPG">
+<meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB12.JPG">
+<meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB13.JPG">
 <meta property="article:published_time" content="2020-07-09T10:22:30.000Z">
-<meta property="article:modified_time" content="2020-07-10T13:21:36.769Z">
+<meta property="article:modified_time" content="2020-07-10T17:40:09.812Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/09/Spring5/jar.JPG">
@@ -290,6 +296,145 @@ public void setGender(String gender) {
     &lt;/property&gt;
 &lt;/bean&gt;</code></pre><p>4、注入属性-级联赋值<br>（1）第一种写法<br>    <!--级联赋值--><br>    <bean id="emp" class="spring_demo.spring5.bean.Emp"><br>        <!--设置两个普通属性--><br>        <property name="ename" value="张楚岚"></property><br>        <property name="gender" value="男"></property><br>        <!--级联赋值--><br>        <property name="dept" ref="dept"></property><br>    </bean><br>    <bean id="dept" class="spring_demo.spring5.bean.Dept"><br>        <property name="dname" value="Java开发部门"></property><br>    </bean></p>
 <p>（2）第二种写法<br>   前提是生产dept对象属性的get方法<br><img src="IOCB7.JPG" alt=""><br>    <!--级联赋值--><br>    <bean id="emp" class="spring_demo.spring5.bean.Emp"><br>        <!--设置两个普通属性--><br>        <property name="ename" value="张楚岚"></property><br>        <property name="gender" value="男"></property><br>        <!--级联赋值--><br>        <property name="dept" ref="dept"></property><br>        <property name="dept.dname" value="人事部门"></property><br>    </bean><br>    <bean id="dept" class="spring_demo.spring5.bean.Dept"><br>        <property name="dname" value="Java开发部门"></property><br>    </bean></p>
+<hr>
+<p>###IOC操作Bean管理（xml注入集合属性）<br>1、注入数组类型属性<br>2、注入List集合类型属性<br>3、注入Map集合类型属性</p>
+<p>（1）创建类、定义数组、list、map、set类型属性，生成对应set方法<br>public class Stu {<br>    //1数组属性<br>    private String[] couress;<br>    //2集合属性<br>    private List<String> list;<br>    //3map属性<br>    private Map&lt;String,String&gt; maps;<br>    //set集合属性<br>    private Set<String> sets;</p>
+<pre><code>public void setSets(Set&lt;String&gt; sets) {
+    this.sets = sets;
+}
+public void setCouress(String[] couress) {
+    this.couress = couress;
+}
+public void setList(List&lt;String&gt; list) {
+    this.list = list;
+}
+public void setMaps(Map&lt;String, String&gt; maps) {
+    this.maps = maps;
+}</code></pre><p>}<br>（2）在spring配置文件中配置</p>
+<!--1集合类型属性注入-->
+<pre><code>&lt;bean id=&quot;stu&quot; class=&quot;spring_demo.spring5.collectiontype.Stu&quot;&gt;
+    &lt;!--2数组类型属性注入--&gt;
+    &lt;property name=&quot;couress&quot;&gt;
+        &lt;array&gt;
+            &lt;value&gt;java课程&lt;/value&gt;
+            &lt;value&gt;数据库课程&lt;/value&gt;
+        &lt;/array&gt;
+    &lt;/property&gt;
+    &lt;!--2list类型属性注入--&gt;
+    &lt;property name=&quot;list&quot;&gt;
+        &lt;list&gt;
+            &lt;value&gt;vue课程&lt;/value&gt;
+            &lt;value&gt;spring课程&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+    &lt;!--2Map类型属性注入--&gt;
+    &lt;property name=&quot;maps&quot;&gt;
+        &lt;map&gt;
+            &lt;entry key=&quot;JAVA&quot; value=&quot;java&quot;&gt;&lt;/entry&gt;
+            &lt;entry key=&quot;PHP&quot; value=&quot;php&quot;&gt;&lt;/entry&gt;
+        &lt;/map&gt;
+    &lt;/property&gt;
+    &lt;!--2set类型属性注入--&gt;
+    &lt;property name=&quot;sets&quot;&gt;
+        &lt;set&gt;
+            &lt;value&gt;MYSQL&lt;/value&gt;
+            &lt;value&gt;REDIS&lt;/value&gt;
+        &lt;/set&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;</code></pre><p>4、在集合里面设置对象类型值<br>   <!--创建多个course对象--><br>    <bean id="course" class="spring_demo.spring5.collectiontype.Course"><br>        <property name="cname" value="spring5框架课程"></property><br>    </bean><br>    <bean id="course2" class="spring_demo.spring5.collectiontype.Course"><br>        <property name="cname" value="Mybatis框架课程"></property><br>    </bean></p>
+ <!--注入list集合类型，值是对象-->
+<pre><code>&lt;property name=&quot;courseList&quot;&gt;
+    &lt;list&gt;
+        &lt;ref bean=&quot;course&quot;&gt;&lt;/ref&gt;
+        &lt;ref bean=&quot;course2&quot;&gt;&lt;/ref&gt;
+    &lt;/list&gt;
+&lt;/property&gt;</code></pre><p>5、把集合注入部分提取出来<br>（1）在spring配置文件中引入名称空间util<br><?xml version="1.0" encoding="UTF-8"?><br><beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"></p>
+<p>（2）使用util标签完成list集合注入提取<br>    <!--1.提取list集合类型属性注入--><br>    &lt;util:list id=”booklist”&gt;<br>        <value>风后奇门</value><br>        <value>双全手</value><br>        <value>拘灵遣将</value><br>    </util:list></p>
+<pre><code>&lt;!--2.提取list集合类型属性注入使用--&gt;
+&lt;bean id=&quot;book&quot; class=&quot;spring_demo.spring5.collectiontype.Book&quot;&gt;
+    &lt;property name=&quot;list&quot; ref=&quot;booklist&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;</code></pre><hr>
+<p>IOC操作Bean管理（FactoryBean）<br>1、Spring有两种类型bean，一种普通bean，另外一种是工厂bean（FactoryBean）</p>
+<p>2、普通bean：在Spring配置文件中定义的类型就是返回类型</p>
+<p>3、工厂bean：在配置文件定义bean类型可以和返回类型不一样<br>第一步创建类，让这个类作为工厂bean，实现接口FactoryBena<br>第二步实现接口里面的方法，在实现的方法中定义返回的bean类型<br>public class MyBean implements FactoryBean<Course> {</p>
+<pre><code>//定义返回bean的对象
+@Override
+public Course getObject() throws Exception {
+    Course course = new Course();
+    course.setCname(&quot;龙虎山全套&quot;);
+    return course;
+}
+
+@Override
+public Class&lt;?&gt; getObjectType() {
+    return null;
+}
+
+@Override
+public boolean isSingleton() {
+    return false;
+}</code></pre><p>}</p>
+ <bean id="mybean" class="spring_demo.spring5.factoryBean.MyBean">
+    </bean>
+
+<p>@Test<br>    void mybeanTest(){<br>        //1.加载spring配置文件<br>        ApplicationContext context =<br>                new ClassPathXmlApplicationContext(“bean7.xml”);</p>
+<pre><code>    //得到创建的配置对象 mybean是配置中id的值
+    Course course = context.getBean(&quot;mybean&quot;, Course.class);
+    System.out.println(course);
+}</code></pre><hr>
+<p>###IOC操作Bean管理（bena作用域）<br>1、在Spring里面，设置创建bean实例时单实例还是多实例<br>2、在Spring里面，默认情况下，bean时单实例对象<br><img src="IOCB8.JPG" alt=""><br><img src="IOCB9.JPG" alt=""></p>
+<p>3、如何设置单实例还是多实例<br>（1）在spring配置文件bean标签里面有属性（scope）用于设置单实例还是多实例<br>（2）scope属性值<br>第一个值，默认值，singleton，表示单实例对象<br>第二个值prototype，表示多实例对象<br><img src="IOCB10.JPG" alt=""><br><img src="IOCB11.JPG" alt=""></p>
+<p>（3）singleton和prototype区别<br>第一  singleton单实例，protot多实例<br>第二  设置 scope值是singleton时候，加载spring配置文件时候就会创建单实例对象<br>         设置 scope值是 prototype 时候，不是在加载spring配置文件时候创建，在调用getBean 方法时候创建多实例对象 </p>
+<p>request：表示一次请求<br>session：表示一次会话</p>
+<hr>
+<p>###IOC操作Bean管理（bena生命周期）<br>1、生命周期<br>（1）从对象创建到对象销毁的过程</p>
+<p>2、bean生命周期<br>（1）通过构造器创建bean实例（无参数构造）<br>（2）为bean的属性设置值和其他bean引用（调用set方法）<br>（3）调用bean的初始化的方法（需要进行配置）<br>（4）bean可以使用了（对象获取到了）<br>（5）当容器关闭时候，调用bean的销毁的方法（需要进行配置销毁的方法）</p>
+<p>3、演示bean生命周期<br>public class Orders {<br>    private String oname;</p>
+<pre><code>//无参构造
+public Orders() {
+    System.out.println(&quot;第一步 执行无参数构造创建bean实例&quot;);
+}
+public void setOname(String oname) {
+    this.oname = oname;
+    System.out.println(&quot;第二步 调用set方法设置值&quot;);
+}
+//创建执行的初始化方法
+public void initMethod(){
+    System.out.println(&quot;第三步 执行初始化方法&quot;);
+}
+//创建执行的销毁方法
+public void destroyMethod(){
+    System.out.println(&quot;第五步 执行销毁的方法&quot;);
+}</code></pre><p>}</p>
+ <bean id="orders" class="spring_demo.spring5.beanlife.Orders" init-method="initMethod" destroy-method="destroyMethod">
+       <property name="oname" value="赤火琉璃珠"></property>
+   </bean>
+
+
+<p>@Test<br>    void beanlifeTest(){<br>        //1.加载spring配置文件<br>//        ApplicationContext context =<br>//                new ClassPathXmlApplicationContext(“bean7.xml”);<br>        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(“bean7.xml”);</p>
+<pre><code>    //得到创建的配置对象 mybean是配置中id的值
+    spring_demo.spring5.beanlife.Orders orders = context.getBean(&quot;mybean&quot;, spring_demo.spring5.beanlife.Orders.class);
+    System.out.println(&quot;第四步 获取创建bean实例对象&quot;);
+
+    //手动bean实例销毁
+    context.close();
+
+}</code></pre><p><img src="IOCB12.JPG" alt=""></p>
+<p>4、加bean的后置处理器，bean生命周期有起步<br>（1）通过构造器创建bean实例（无参数构造）<br>（2）为bean的属性设置值和其他bean引用（调用set方法）<br>（3）把bean实例传递bean后缀处理的方法postProcessBeforeInitialization<br>（4）调用bean的初始化的方法（需要进行配置）<br>（5）把bean实例传递bean后缀处理的方法postProcessAfterInitialization<br>（6）bean可以使用了（对象获取到了）<br>（7）当容器关闭时候，调用bean的销毁的方法（需要进行配置销毁的方法）</p>
+<p>5、演示添加后置处理器效果<br>（1）创建类，实现接口BeanPostProcessor，创建后缀处理器<br>public class MyBeanPost implements BeanPostProcessor {<br>    @Override<br>    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {<br>        System.out.println(“在初始化之前执行的方法”);<br>        return bean;<br>    }</p>
+<pre><code>@Override
+public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    System.out.println(&quot;在初始化之后执行的方法&quot;);
+    return bean;
+}</code></pre><p>}</p>
+ <!--配置后置处理  会为当前所有的bean配置处理器-->
+<pre><code>&lt;bean id=&quot;mybenapost&quot; class=&quot;spring_demo.spring5.beanlife.MyBeanPost&quot;&gt;&lt;/bean&gt;</code></pre><p><img src="IOCB13.JPG" alt=""></p>
+<hr>
+<p>IOC操作Bean管理（xml自动装配）</p>
 
       
 
