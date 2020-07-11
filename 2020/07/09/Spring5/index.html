@@ -36,8 +36,11 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB11.JPG">
 <meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB12.JPG">
 <meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCB13.JPG">
+<meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCX1.JPG">
+<meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCX2.JPG">
+<meta property="og:image" content="http://yoursite.com/2020/07/09/Spring5/IOCX3.JPG">
 <meta property="article:published_time" content="2020-07-09T10:22:30.000Z">
-<meta property="article:modified_time" content="2020-07-10T17:40:09.812Z">
+<meta property="article:modified_time" content="2020-07-11T06:08:48.823Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/09/Spring5/jar.JPG">
@@ -434,7 +437,44 @@ public Object postProcessAfterInitialization(Object bean, String beanName) throw
  <!--配置后置处理  会为当前所有的bean配置处理器-->
 <pre><code>&lt;bean id=&quot;mybenapost&quot; class=&quot;spring_demo.spring5.beanlife.MyBeanPost&quot;&gt;&lt;/bean&gt;</code></pre><p><img src="IOCB13.JPG" alt=""></p>
 <hr>
-<p>IOC操作Bean管理（xml自动装配）</p>
+<p>###IOC操作Bean管理（xml自动装配）<br>1、什么是自动装配<br>（1）根据指定装配规则（属性名称或者属性类型），Spring自动匹配属性值</p>
+<p>2、演示自动装配过程<br>（1）根据属性名称自动装配</p>
+<!--实现自动装配
+        bean标签属性autowire，配置自动装配
+        autowire的两个属性值：byName根据属性名称装配，bean中id的值和类里面属性名称要一样
+        ，byType根据属性类型装配-->
+<pre><code>&lt;bean id=&quot;emp&quot; class=&quot;spring_demo.spring5.autowire.Emp&quot; autowire=&quot;byName&quot;&gt;</code></pre><!--        <property name="dept" ref="dept"></property>-->
+<pre><code>&lt;/bean&gt;
+&lt;bean id=&quot;dept&quot; class=&quot;spring_demo.spring5.autowire.Dept&quot;&gt;&lt;/bean&gt;</code></pre><p>（2）根据属性类型自动注入</p>
+<!--实现自动装配
+        bean标签属性autowire，配置自动装配
+        autowire的两个属性值：byName根据属性名称装配，bean中id的值和类里面属性名称要一样
+        ，byType根据属性类型装配-->
+<pre><code>&lt;bean id=&quot;emp&quot; class=&quot;spring_demo.spring5.autowire.Emp&quot; autowire=&quot;byType&quot;&gt;</code></pre><!--        <property name="dept" ref="dept"></property>-->
+<pre><code>&lt;/bean&gt;
+&lt;bean id=&quot;dept&quot; class=&quot;spring_demo.spring5.autowire.Dept&quot;&gt;&lt;/bean&gt;</code></pre><hr>
+<p>###IOC操作Bean管理(外部属性文件)<br>1、直接配置数据库信息<br>（1）配置德鲁伊连接池<br>（2）引入德鲁伊连接池依赖jar包<br><img src="IOCX1.JPG" alt=""></p>
+<!--直接配置连接池-->
+<pre><code>&lt;bean id=&quot;dataSource&quot; class=&quot;com.alibaba.druid.pool.DruidDataSource&quot;&gt;
+    &lt;!-- dataSource.setDriverClassName(&quot;com.mysql.jdbc.Driver&quot;);
+        set方法注入
+    --&gt;
+    &lt;!-- 获取properties文件内容，根据key获取，使用spring表达式获取 --&gt;
+    &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot;&gt;&lt;/property&gt;
+    &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/Userdb&quot;&gt;&lt;/property&gt;
+    &lt;property name=&quot;username&quot; value=&quot;root&quot;&gt;&lt;/property&gt;
+    &lt;property name=&quot;password&quot; value=&quot;root&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;</code></pre><p>2、引入外部属性文件配置数据库连接池<br>（1）创建外部属性文件，properties格式文件，写入数据库信息<br><img src="IOCX2.JPG" alt=""></p>
+<p>（2）把外部properties属性文件引入到spring配置文件中<br>*引入context名称空间<br><?xml version="1.0" encoding="UTF-8"?><br><beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"></p>
+<p>#在spring配置文件中使用标签引入外部属性文件</p>
+ <!--引入外部属性文件-->
+<pre><code>&lt;context:property-placeholder location=&quot;application.properties&quot;/&gt;</code></pre><p><img src="IOCX3.JPG" alt=""></p>
 
       
 
